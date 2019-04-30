@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.com/rajeman/store-manager-flask.svg?branch=develop)](https://travis-ci.com/rajeman/store-manager-flask)
+[![Maintainability](https://api.codeclimate.com/v1/badges/3f731b54fa90a09b6108/maintainability)](https://codeclimate.com/github/rajeman/store-manager-flask/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/3f731b54fa90a09b6108/test_coverage)](https://codeclimate.com/github/rajeman/store-manager-flask/test_coverage)
 # Store-Manager
 Store Manager is a web application that allows store owners to manage product sales, inventory and
 records
