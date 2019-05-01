@@ -1,5 +1,7 @@
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 from config import config
+import os
 from flask_restful import Api
 from api.student import Student
 
@@ -15,5 +17,5 @@ def create_api(app):
     api = Api(app)
     api.add_resource(Student, '/student/<string:name>')
 
-if __name__ == '__main__':
-    create_app('development').run(port=5001)
+app = create_app(os.getenv('APP_SETTINGS'))
+db = SQLAlchemy(app)

@@ -7,10 +7,11 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
     load_dotenv(os.path.join(basedir, '.env'))
     SECRET_KEY = os.getenv('SECRET_KEY')
-    DEBUG = False
 
 
 class DevelopmentConfig(Config):
+    SQLALCHEMY_DATABASE_URI = os.getenv('DEV_DATABASE_URI')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = True
 
 
@@ -19,9 +20,8 @@ class ProductionConfig(Config):
 
 
 class TestingConfig(Config):
-    DEBUG = True
     Testing = True
-
+    SQLALCHEMY_DATABASE_URI = os.getenv('TEST_DATABASE_URI')
 
 config = {
     'development': DevelopmentConfig,
