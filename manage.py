@@ -1,7 +1,7 @@
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from app import app, db
-from api.product.model import Products
+from api.models.product import Product
 
 migrate = Migrate(app, db)
 

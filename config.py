@@ -22,6 +22,7 @@ class ProductionConfig(Config):
 class TestingConfig(Config):
     Testing = True
     SQLALCHEMY_DATABASE_URI = os.getenv('TEST_DATABASE_URI')
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 config = {
     'development': DevelopmentConfig,
