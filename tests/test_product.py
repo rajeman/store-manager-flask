@@ -11,7 +11,8 @@ from fixtures.product_fixtures import (
     get_product_list_response,
     get_single_product_response,
     get_single_product_error,
-    update_product_valid_data_response
+    update_product_valid_data_response,
+    delete_product_successful_response
 )
 
 
@@ -135,3 +136,25 @@ class TestProduct(BaseTestCase):
         response = self.client.put('/api/v1/products/-10', data=json.dumps(
             create_product_valid_data), content_type='application/json')
         self.assert_404(response)
+
+    def test_delete_product_non_existent_id(self):
+        """
+        Test to show that a product cannot be deleted if id does not exist
+        """
+        response = self.client.delete('/api/v1/products/-10')
+        self.assert_404(response)
+
+    def test_delete_product_no_id_params(self):
+        """
+        Test to show that a product cannot be deleted if no id is supplied
+        """
+        response = self.client.delete('/api/v1/products')
+        self.assert_404(response)
+
+    def test_delete_product_successful_data(self):
+        """
+        Test to show that a user can delete a product
+        """
+        response = self.client.delete('/api/v1/products/2')
+        data = json.loads(response.get_data())
+        assert data == delete_product_successful_response

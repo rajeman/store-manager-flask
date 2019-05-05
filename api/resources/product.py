@@ -42,3 +42,13 @@ class Product(Resource):
                              quantity=product['productQuantity'])
         current_product.save_to_db()
         return {'message': 'successfully updated product'}
+
+    def delete(self, id=None):
+        if not id:
+            return {'error': 'URL not found on this server'}, 404
+        from api.models.product import Product as ProductModel
+        product = ProductModel.find_by_id(id=id)
+        if not product:
+            return {'error': 'Product not found'}, 404
+        product.delete_from_db()
+        return {'message': 'successfully deleted product'}
