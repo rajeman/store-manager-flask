@@ -15,7 +15,7 @@ def create_app(config_name):
 
 def create_api(flask_app):
     api = Api(flask_app)
-    api.add_resource(Product, '/api/v1/products')
+    api.add_resource(Product, '/api/v1/products', '/api/v1/products/<id>')
 
 
 app = create_app(os.getenv('APP_SETTINGS'))

@@ -40,3 +40,32 @@ create_product_invalid_minimum_inventory = {
     "price": 12,
     "minimumInventory": -1
 }
+
+get_product_list_response = [
+    {
+        "product_id": 1,
+        "product_name": "Wifi Module",
+        "product_quantity": 1015,
+        "product_price": 30,
+        "minimum_inventory": 5
+    },
+    {
+        "product_id": 2,
+        "product_name": "RFID Reader",
+        "product_quantity": 100,
+        "product_price": 12,
+        "minimum_inventory": 15
+    }
+]
+
+get_single_product_response = [
+    {
+        "product_id": 1,
+        "product_name": "Wifi Module",
+        "product_quantity": 1015,
+        "product_price": 30,
+        "minimum_inventory": 5
+    }
+]
+
+get_single_product_error = {'error': 'Product not found'}
