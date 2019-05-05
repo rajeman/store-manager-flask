@@ -10,7 +10,8 @@ from fixtures.product_fixtures import (
     create_product_invalid_data_response,
     get_product_list_response,
     get_single_product_response,
-    get_single_product_error
+    get_single_product_error,
+    update_product_valid_data_response
 )
 
 
@@ -32,7 +33,8 @@ class TestProduct(BaseTestCase):
         than three characters
         """
         response = self.client.post(
-            '/api/v1/products', data=json.dumps(create_product_invalid_name), content_type='application/json')
+            '/api/v1/products', data=json.dumps(create_product_invalid_name),
+            content_type='application/json')
         data = json.loads(response.get_data())
         assert data == create_product_invalid_data_response
 
@@ -96,5 +98,40 @@ class TestProduct(BaseTestCase):
         Test to show that a product cannot be created if an id is supplied
         """
         response = self.client.post('/api/v1/products/1', data=json.dumps(
+            create_product_valid_data), content_type='application/json')
+        self.assert_404(response)
+
+    def test_update_product_valid_data(self):
+        """
+        Test to show that a product can be updated with valid data
+        """
+        response = self.client.put('/api/v1/products/1', data=json.dumps(
+            create_product_valid_data), content_type='application/json')
+        data = json.loads(response.get_data())
+        assert data == update_product_valid_data_response
+
+    def test_update_product_no_id_params(self):
+        """
+        Test to show that a product cannot be updated if no id is supplied
+        """
+        response = self.client.put('/api/v1/products', data=json.dumps(
+            create_product_valid_data), content_type='application/json')
+        self.assert_404(response)
+
+    def test_update_product_with_invalid_data(self):
+        """
+        Test to show that a product cannot be updated with invalid data
+        """
+        response = self.client.post(
+            '/api/v1/products/1', data=json.dumps(create_product_invalid_name),
+            content_type='application/json')
+        data = json.loads(response.get_data())
+        assert data == create_product_invalid_data_response
+
+    def test_update_product_non_existent_id(self):
+        """
+        Test to show that a product cannot be updated if id does not exist
+        """
+        response = self.client.put('/api/v1/products/-10', data=json.dumps(
             create_product_valid_data), content_type='application/json')
         self.assert_404(response)
