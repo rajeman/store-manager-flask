@@ -5,8 +5,6 @@ def valid_product(request):
     def valid_product_decorator(func):
         @functools.wraps(func)
         def wrapper(self, id=None):
-            if id:
-                return {'error': 'URL not found on this server'}, 404
             kwargs = request.get_json()
             name = kwargs.get('productName')
             quantity = kwargs.get('productQuantity')
@@ -23,3 +21,10 @@ def valid_product(request):
                               'minimum inventory positive integers')}, 422
         return wrapper
     return valid_product_decorator
+
+
+def update_entity_fields(entity, **kwargs):
+    keys = kwargs.keys()
+    for key in keys:
+        exec("entity.{0} = kwargs['{0}']".format(key))
+    return entity

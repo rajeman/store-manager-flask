@@ -69,3 +69,7 @@ get_single_product_response = [
 ]
 
 get_single_product_error = {'error': 'Product not found'}
+
+update_product_valid_data_response = {
+    "message": "successfully updated product"
+}
