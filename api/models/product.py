@@ -10,3 +10,26 @@ class Product(BaseModel):
     price = Column(Integer, nullable=False)
     quantity = Column(Integer, nullable=False)
 
+    @classmethod
+    def find_by_id(cls, id):
+        return Product.query.filter_by(id=id).first()
+
+    @classmethod
+    def find_all(cls):
+        return Product.query.all()
+
+    def json(self):
+        return [{'product_id': self.id,
+                 'product_name': self.name,
+                 'product_price': self.price,
+                 'product_quantity': self.quantity,
+                 'minimum_inventory': self.minimum_inventory}]
+
+    @classmethod
+    def json_all(cls, products):
+        return [{'product_id': product.id,
+                 'product_name': product.name,
+                 'product_price': product.price,
+                 'product_quantity': product.quantity,
+                 'minimum_inventory': product.minimum_inventory}
+                for product in products]
