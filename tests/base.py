@@ -1,6 +1,7 @@
 from flask_testing import TestCase
 from app import app, db
 from api.models.product import Product as ProductModel
+from api.models.user import User as UserModel
 
 
 class BaseTestCase(TestCase):
@@ -22,6 +23,11 @@ class BaseTestCase(TestCase):
                                      quantity=100)
             db.session.add(product_1)
             db.session.add(product_2)
+            user = UserModel(name='Susan Nice', email='suzan.nice@hoc.com',
+                             password='password',
+                             level=1
+                             )
+            db.session.add(user)
             db.session.commit()
         self.client = self.test_app.test_client()
 

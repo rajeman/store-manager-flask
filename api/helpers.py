@@ -1,4 +1,5 @@
 import functools
+import re
 
 
 def valid_product(request):
@@ -21,6 +22,24 @@ def valid_product(request):
                               'minimum inventory positive integers')}, 422
         return wrapper
     return valid_product_decorator
+
+
+def valid_user_details(request):
+    def valid_user_details_decorator(func):
+        @functools.wraps(func)
+        def wrapper(self, id=None):
+            kwargs = request.get_json()
+            if not kwargs:
+                return {'error': ('Invalid input. Make sure email is valid and name is at least 3 characters')}, 400
+            email = kwargs.get('email', '')
+            name = kwargs.get('name')
+            is_valid = re.search(
+                r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', email) and len(str(name)) > 2
+            if is_valid:
+                return func(self, id)
+            return {'error': ('Invalid input. Make sure email is valid and name is at least 3 characters')}, 400
+        return wrapper
+    return valid_user_details_decorator
 
 
 def update_entity_fields(entity, **kwargs):
