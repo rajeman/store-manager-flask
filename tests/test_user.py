@@ -17,7 +17,7 @@ class TestUser(BaseTestCase):
         """
         Test to show that a user can be created with valid user details
         """
-        response = self.client.post('/api/v1/auth', data=json.dumps(
+        response = self.client.post('/api/v1/auth/signup', data=json.dumps(
             create_user_valid_data), content_type='application/json')
         data = json.loads(response.get_data())
         assert data == create_user_expected_response
@@ -26,7 +26,7 @@ class TestUser(BaseTestCase):
         """
         Test to show that a user cannot be created if email is in use
         """
-        response = self.client.post('/api/v1/auth', data=json.dumps(
+        response = self.client.post('/api/v1/auth/signup', data=json.dumps(
             create_user_duplicate_email), content_type='application/json')
         data = json.loads(response.get_data())
         assert data == create_user_duplicate_email_response
@@ -36,7 +36,7 @@ class TestUser(BaseTestCase):
         Test to show that a user cannot be created if name is invalid
         """
         response = self.client.post(
-            '/api/v1/auth', data=json.dumps(create_user_invalid_name),
+            '/api/v1/auth/signup', data=json.dumps(create_user_invalid_name),
             content_type='application/json')
         data = json.loads(response.get_data())
         assert data == create_user_invalid_detail_response
@@ -46,7 +46,7 @@ class TestUser(BaseTestCase):
         Test to show that a user cannot be created if email is invalid
         """
         response = self.client.post(
-            '/api/v1/auth', data=json.dumps(create_user_invalid_email),
+            '/api/v1/auth/signup', data=json.dumps(create_user_invalid_email),
             content_type='application/json')
         data = json.loads(response.get_data())
         assert data == create_user_invalid_detail_response
