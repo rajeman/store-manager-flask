@@ -28,3 +28,7 @@ create_user_invalid_email = {
 create_user_invalid_detail_response = {
     "error": "Invalid input. Make sure email is valid and name is at least 3 characters"
 }
+
+create_user_no_json_data_expected_response = {
+    'msg': 'Missing JSON in request'
+}

@@ -30,9 +30,9 @@ def valid_user_details(request):
         def wrapper(self, id=None):
             kwargs = request.get_json()
             if not kwargs:
-                return {'error': ('Invalid input. Make sure email is valid and name is at least 3 characters')}, 400
+                return {"msg": "Missing JSON in request"}, 400
             email = kwargs.get('email', '')
-            name = kwargs.get('name')
+            name = kwargs.get('name', '')
             is_valid = re.search(
                 r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)', email) and len(str(name)) > 2
             if is_valid:
