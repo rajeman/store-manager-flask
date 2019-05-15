@@ -24,7 +24,7 @@ class BaseTestCase(TestCase):
             db.session.add(product_1)
             db.session.add(product_2)
             user = UserModel(name='Susan Nice', email='suzan.nice@hoc.com',
-                             password='password',
+                             password='$2b$12$Xl7npipxV3ejaaIGRKNp1uotTK5Gi0ka6t312mhyRYv1qgXV9UOMe',
                              level=1
                              )
             db.session.add(user)

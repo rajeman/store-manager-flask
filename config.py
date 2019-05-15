@@ -6,7 +6,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     load_dotenv(os.path.join(basedir, '.env'))
-    SECRET_KEY = os.getenv('SECRET_KEY')
+    SECRET_KEY = os.getenv('JWT_SECRET_KEY')
 
 
 class DevelopmentConfig(Config):

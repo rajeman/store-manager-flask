@@ -8,6 +8,7 @@ class User(Resource):
     @valid_user_details(request)
     def post(self, id=None):
         from api.models.user import User as UserModel
+        from app import bcrypt
         user = request.get_json()
         existing_user = UserModel.find_by_email(user['email'].lower())
         if existing_user:
@@ -15,8 +16,9 @@ class User(Resource):
         new_user = UserModel(
             name=user['name'],
             email=user['email'].lower(),
-            password=os.getenv('DEFAULT_USER_PASSWORD'),
+            password=bcrypt.generate_password_hash(
+                os.getenv('DEFAULT_USER_PASSWORD')).decode('utf-8'),
             level=1
         )
         new_user.save_to_db()
-        return {'message': 'account created for {}'.format(user['name'])}
+        return {'message': 'account created for {}'.format(user['name'])}, 201
