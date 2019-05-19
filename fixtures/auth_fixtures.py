@@ -3,6 +3,11 @@ login_user_valid_data = {
     'password': 'somecrazeypassword'
 }
 
+login_admin_valid_data = {
+    'email': 'gregory.best@hoc.com',
+    'password': 'somecrazeypassword'
+}
+
 login_user_invalid_password = {
     'email': 'suzan.nice@hoc.com',
     'password': 'somepassword'

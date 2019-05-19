@@ -1,9 +1,19 @@
 from flask import request
 from flask_restful import Resource
-from api.helpers import valid_product, update_entity_fields
+from flask_jwt_extended import jwt_required
+from api.helpers import (
+    valid_product,
+    update_entity_fields,
+    user_level,
+    Attendant,
+    Admin
+)
 
 
 class Product(Resource):
+
+    @jwt_required
+    @user_level(Admin)
     @valid_product(request)
     def post(self, id=None):
         from api.models.product import Product as ProductModel
@@ -18,6 +28,8 @@ class Product(Resource):
         new_product.save_to_db()
         return {'message': '{} was successfully added'.format(product['productName'])}
 
+    @jwt_required
+    @user_level(Attendant, Admin)
     def get(self, id=None):
         from api.models.product import Product as ProductModel
         if id:
@@ -27,6 +39,8 @@ class Product(Resource):
             return {'error': 'Product not found'}, 404
         return ProductModel.json_all(ProductModel.find_all())
 
+    @jwt_required
+    @user_level(Admin)
     @valid_product(request)
     def put(self, id=None):
         if not id:
@@ -43,6 +57,8 @@ class Product(Resource):
         current_product.save_to_db()
         return {'message': 'successfully updated product'}
 
+    @jwt_required
+    @user_level(Admin)
     def delete(self, id=None):
         if not id:
             return {'error': 'URL not found on this server'}, 404
