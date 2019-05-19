@@ -2,9 +2,14 @@ import os
 from flask import request
 from flask_restful import Resource
 from api.helpers import valid_user_details
+from flask_jwt_extended import jwt_required
+from api.helpers import (user_level, Attendant, Admin)
 
 
 class User(Resource):
+
+    @jwt_required
+    @user_level(Admin)
     @valid_user_details(request)
     def post(self, id=None):
         from api.models.user import User as UserModel
