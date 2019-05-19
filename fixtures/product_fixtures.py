@@ -5,6 +5,10 @@ create_product_valid_data = {
     "minimumInventory": 1
 }
 
+create_product_unauthorized = {
+    "error": "You are not authorized to perform this action"
+}
+
 create_product_valid_data_response = {
     "message": "Raspberry Pi was successfully added"
 }
@@ -39,6 +43,10 @@ create_product_invalid_minimum_inventory = {
     "productQuantity": 20,
     "price": 12,
     "minimumInventory": -1
+}
+
+create_product_no_json_data_expected_response = {
+    'msg': 'Missing JSON in request'
 }
 
 get_product_list_response = [

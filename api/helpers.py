@@ -1,5 +1,9 @@
 import functools
 import re
+from flask_jwt_extended import get_jwt_identity
+
+Attendant = 1
+Admin = 2
 
 
 def valid_product(request):
@@ -7,6 +11,8 @@ def valid_product(request):
         @functools.wraps(func)
         def wrapper(self, id=None):
             kwargs = request.get_json()
+            if not kwargs:
+                return {"msg": "Missing JSON in request"}, 400
             name = kwargs.get('productName')
             quantity = kwargs.get('productQuantity')
             price = kwargs.get('price')
@@ -40,6 +46,19 @@ def valid_user_details(request):
             return {'error': ('Invalid input. Make sure email is valid and name is at least 3 characters')}, 400
         return wrapper
     return valid_user_details_decorator
+
+
+def user_level(*levels):
+    def allowed_levels(func):
+        @functools.wraps(func)
+        def wrapper(self, id=None):
+            from api.models.user import User as UserModel
+            current_user = get_jwt_identity()
+            if current_user['level'] not in levels or not UserModel.query.get(current_user['id']):
+                return {"error": "You are not authorized to perform this action"}, 401
+            return func(self, id)
+        return wrapper
+    return allowed_levels
 
 
 def update_entity_fields(entity, **kwargs):
