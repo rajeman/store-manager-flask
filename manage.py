@@ -3,6 +3,7 @@ from flask_migrate import Migrate, MigrateCommand
 from app import app, db
 from api.models.product import Product
 from api.models.user import User
+from api.models.order import Order
 
 migrate = Migrate(app, db)
 

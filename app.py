@@ -8,7 +8,7 @@ from flask_bcrypt import Bcrypt
 from api.resources.product import Product
 from api.resources.user import User
 from api.resources.auth import Auth
-
+from api.resources.order import Order
 
 def create_app(config_name):
     flask_app = Flask(__name__)
@@ -22,6 +22,7 @@ def create_api(flask_app):
     api.add_resource(Product, '/api/v1/products', '/api/v1/products/<id>')
     api.add_resource(User, '/api/v1/auth/signup')
     api.add_resource(Auth, '/api/v1/auth/login')
+    api.add_resource(Order, '/api/v1/sales')
 
 
 app = create_app(os.getenv('APP_SETTINGS'))

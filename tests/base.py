@@ -3,6 +3,7 @@ import json
 from app import app, db
 from api.models.product import Product as ProductModel
 from api.models.user import User as UserModel
+from api.models.order import Order as OrderModel
 from fixtures.auth_fixtures import (
     login_user_valid_data as login_attendant_valid_data,
     login_admin_valid_data)
