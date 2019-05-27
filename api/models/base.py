@@ -21,3 +21,6 @@ class BaseModel(db.Model):
     def delete_from_db(self):
         db.session.delete(self)
         db.session.commit()
+
+    def save_without_commit(self):
+        db.session.add(self)
