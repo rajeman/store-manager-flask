@@ -189,7 +189,7 @@ class TestProduct(BaseTestCase):
         """
         Test to show that a user can delete a product
         """
-        response = self.client.delete('/api/v1/products/2', headers={
+        response = self.client.delete('/api/v1/products/3', headers={
             'Authorization': 'Bearer {}'.format(self.admin_token)})
         data = json.loads(response.get_data())
         assert data == delete_product_successful_response

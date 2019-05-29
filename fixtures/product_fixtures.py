@@ -63,6 +63,13 @@ get_product_list_response = [
         "product_quantity": 100,
         "product_price": 12,
         "minimum_inventory": 15
+    },
+    {
+        "product_id": 3,
+        "product_name": "SD Card Reader",
+        "product_quantity": 13,
+        "product_price": 10,
+        "minimum_inventory": 11
     }
 ]
 

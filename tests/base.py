@@ -26,8 +26,13 @@ class BaseTestCase(TestCase):
                                      price=12,
                                      minimum_inventory=15,
                                      quantity=100)
+            product_3 = ProductModel(name='SD Card Reader',
+                                     price=10,
+                                     minimum_inventory=11,
+                                     quantity=13)
             db.session.add(product_1)
             db.session.add(product_2)
+            db.session.add(product_3)
             attendant = UserModel(name='Susan Nice', email='suzan.nice@hoc.com',
                                   password='$2b$12$Xl7npipxV3ejaaIGRKNp1uotTK5Gi0ka6t312mhyRYv1qgXV9UOMe',
                                   level=1
@@ -38,6 +43,15 @@ class BaseTestCase(TestCase):
                               level=2
                               )
             db.session.add(admin)
+            order_item_1 = OrderModel(user_id=1, time_checked_out=1558902658490, product_id=1,
+                                product_quantity=10, product_price=20)
+            order_item_2 = OrderModel(user_id=1, time_checked_out=1558902658490, product_id=2,
+                                product_quantity=15, product_price=25)
+            order_item_3 = OrderModel(user_id=1, time_checked_out=1558902658499, product_id=2,
+                                product_quantity=11, product_price=12)
+            db.session.add(order_item_1)
+            db.session.add(order_item_2)
+            db.session.add(order_item_3)
             db.session.commit()
         response = self.test_app.test_client().post('/api/v1/auth/login', data=json.dumps(
             login_admin_valid_data), content_type='application/json')
