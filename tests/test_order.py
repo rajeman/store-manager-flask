@@ -17,7 +17,8 @@ from fixtures.order_fixtures import (
     expected_response_not_enough_product,
     create_order_duplicate_product_id,
     expected_response_duplicate_product_id,
-    expected_response_create_order_no_json_data
+    expected_response_create_order_no_json_data,
+    expected_response_get_order_list
 )
 
 order_url = '/api/v1/sales'
@@ -121,3 +122,12 @@ class TestOrder(BaseTestCase):
             headers={'Authorization': 'Bearer {}'.format(self.attendant_token)})
         data = json.loads(response.get_data())
         assert data == expected_response_create_order_no_json_data
+
+    def test_get_order_list(self):
+            """
+            Test to show that an admin can get list of orders
+            """
+            CommonTestCases.admin_token_assert_count_equal(
+                self,
+                order_url,
+                expected_response_get_order_list)

@@ -1,4 +1,4 @@
-from sqlalchemy import (Column, Integer, Text)
+from sqlalchemy import (Column, Integer, Text, Index)
 from api.models.base import BaseModel
 
 
@@ -10,6 +10,14 @@ class User(BaseModel):
     password = Column(Text, nullable=False)
     total_orders = Column(Integer, default=0)
     level = Column(Integer, nullable=False)
+
+    __table_args__ = (
+            Index(
+                'ix_unique_email_content',
+                'email',
+                unique=True
+                ),
+        )
 
     @classmethod
     def find_by_email(cls, email):

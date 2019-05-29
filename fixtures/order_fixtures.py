@@ -71,3 +71,22 @@ expected_response_duplicate_product_id = {
 expected_response_create_order_no_json_data = {
     'msg': 'Missing JSON in request'
 }
+
+expected_response_get_order_list = [
+    {
+        "order_id": 1,
+        "user_id": 1,
+        "user_name": "Susan Nice",
+        "time_checked_out": 1558902658490,
+        "order_price": 45,
+        "order_quantity": 25
+    },
+    {
+        "order_id": 3,
+        "user_id": 1,
+        "user_name": "Susan Nice",
+        "time_checked_out": 1558902658499,
+        "order_price": 12,
+        "order_quantity": 11
+    }
+]
