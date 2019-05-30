@@ -123,11 +123,20 @@ class TestOrder(BaseTestCase):
         data = json.loads(response.get_data())
         assert data == expected_response_create_order_no_json_data
 
-    def test_get_order_list(self):
+    def test_get_order_list_admin(self):
             """
             Test to show that an admin can get list of orders
             """
             CommonTestCases.admin_token_assert_count_equal(
+                self,
+                order_url,
+                expected_response_get_order_list)
+
+    def test_get_order_list_attendant(self):
+            """
+            Test to show that an attendant can get list of orders made by her
+            """
+            CommonTestCases.attendant_token_assert_count_equal(
                 self,
                 order_url,
                 expected_response_get_order_list)

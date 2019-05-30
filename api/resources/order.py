@@ -46,12 +46,20 @@ class Order(Resource):
             }
 
     @jwt_required
-    @user_level(Admin)
+    @user_level(Admin, Attendant)
     def get(self, id=None):
+        # if not id:
+        #     return {'error': 'URL not found on this server'}, 404
         from api.models.order import Order as OrderModel
         from api.models.user import User as UserModel
 
-        all_orders = OrderModel.query.join(UserModel).all()
+        all_orders = []
+        current_user = get_jwt_identity()
+        if current_user['level'] == Attendant:
+            all_orders = OrderModel.query.join(UserModel).filter(
+                UserModel.id==current_user['id']).all()
+        else:
+            all_orders = OrderModel.query.join(UserModel).all()
         timestamp_to_order = {}
         for order in all_orders:
             order_timestamp = order.time_checked_out
