@@ -13,6 +13,7 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = os.getenv('DEV_DATABASE_URI')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = True
+    JWT_ACCESS_TOKEN_EXPIRES = 3600 * 72
 
 
 class ProductionConfig(Config):

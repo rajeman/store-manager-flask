@@ -83,6 +83,12 @@ class CommonTestCases(BaseTestCase):
         data = json.loads(response.get_data())
         self.assertCountEqual(data, expected_response)
 
+    def attendant_token_assert_count_equal(self, url, expected_response):
+        response = self.client.get(url, content_type='application/json',
+                                   headers={'Authorization': 'Bearer {}'.format(self.attendant_token)})
+        data = json.loads(response.get_data())
+        self.assertCountEqual(data, expected_response)
+
     def admin_token_assert_put_equal(self, url, json_data, expected_response):
         response = self.client.put(url, data=json.dumps(
             json_data), content_type='application/json', headers={'Authorization': 'Bearer {}'.format(self.admin_token)})
