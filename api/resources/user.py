@@ -3,7 +3,7 @@ from flask import request
 from flask_restful import Resource
 from api.helpers import valid_user_details
 from flask_jwt_extended import jwt_required
-from api.helpers import (user_level, Attendant, Admin)
+from api.helpers import (user_level, Admin)
 
 
 class User(Resource):

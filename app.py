@@ -9,6 +9,7 @@ from api.resources.product import Product
 from api.resources.user import User
 from api.resources.auth import Auth
 from api.resources.order import Order
+from api.resources.profile import Profile
 
 def create_app(config_name):
     flask_app = Flask(__name__)
@@ -23,6 +24,7 @@ def create_api(flask_app):
     api.add_resource(User, '/api/v1/auth/signup')
     api.add_resource(Auth, '/api/v1/auth/login')
     api.add_resource(Order, '/api/v1/sales', '/api/v1/sales/<id>')
+    api.add_resource(Profile, '/api/v1/user')
 
 
 app = create_app(os.getenv('APP_SETTINGS'))
