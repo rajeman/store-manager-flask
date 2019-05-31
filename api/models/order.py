@@ -12,3 +12,4 @@ class Order(BaseModel):
     product_id = Column(Integer, ForeignKey('products.id'), nullable=False)
     product_quantity = Column(Integer, nullable=False)
     user = relationship("User", backref="order")
+    product = relationship("Product", backref="product")

@@ -49,39 +49,45 @@ create_product_no_json_data_expected_response = {
     'msg': 'Missing JSON in request'
 }
 
-get_product_list_response = [
-    {
-        "product_id": 1,
-        "product_name": "Wifi Module",
-        "product_quantity": 1015,
-        "product_price": 30,
-        "minimum_inventory": 5
-    },
-    {
-        "product_id": 2,
-        "product_name": "RFID Reader",
-        "product_quantity": 100,
-        "product_price": 12,
-        "minimum_inventory": 15
-    },
-    {
-        "product_id": 3,
-        "product_name": "SD Card Reader",
-        "product_quantity": 13,
-        "product_price": 10,
-        "minimum_inventory": 11
-    }
-]
+get_product_list_response = {
+    'message': 'successfully fetched products',
+    'products': [
+        {
+            "product_id": 1,
+            "product_name": "Wifi Module",
+            "product_quantity": 1015,
+            "product_price": 30,
+            "minimum_inventory": 5
+        },
+        {
+            "product_id": 2,
+            "product_name": "RFID Reader",
+            "product_quantity": 100,
+            "product_price": 12,
+            "minimum_inventory": 15
+        },
+        {
+            "product_id": 3,
+            "product_name": "SD Card Reader",
+            "product_quantity": 13,
+            "product_price": 10,
+            "minimum_inventory": 11
+        }
+    ]
+}
 
-get_single_product_response = [
-    {
-        "product_id": 1,
-        "product_name": "Wifi Module",
-        "product_quantity": 1015,
-        "product_price": 30,
-        "minimum_inventory": 5
-    }
-]
+get_single_product_response = {
+    'message': 'successfully fetched product',
+    'product': [
+        {
+            "product_id": 1,
+            "product_name": "Wifi Module",
+            "product_quantity": 1015,
+            "product_price": 30,
+            "minimum_inventory": 5
+        }
+    ]
+}
 
 get_single_product_error = {'error': 'Product not found'}
 

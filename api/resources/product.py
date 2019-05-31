@@ -35,9 +35,11 @@ class Product(Resource):
         if id:
             product = ProductModel.find_by_id(id=id)
             if product:
-                return product.json()
+                return {'message': 'successfully fetched product',
+                        'product': product.json()}
             return {'error': 'Product not found'}, 404
-        return ProductModel.json_all(ProductModel.find_all())
+        return {'message': 'successfully fetched products',
+                'products': ProductModel.json_all(ProductModel.find_all())}
 
     @jwt_required
     @user_level(Admin)
