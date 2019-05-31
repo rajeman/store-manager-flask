@@ -72,21 +72,62 @@ expected_response_create_order_no_json_data = {
     'msg': 'Missing JSON in request'
 }
 
-expected_response_get_order_list = [
-    {
-        "order_id": 1,
-        "user_id": 1,
-        "user_name": "Susan Nice",
-        "time_checked_out": 1558902658490,
-        "order_price": 45,
-        "order_quantity": 25
-    },
-    {
-        "order_id": 3,
-        "user_id": 1,
-        "user_name": "Susan Nice",
-        "time_checked_out": 1558902658499,
-        "order_price": 12,
-        "order_quantity": 11
-    }
-]
+expected_response_get_order_list = {
+    'message': 'successfully fetched orders',
+    'orders': [
+        {
+            "order_id": 1,
+            "user_id": 1,
+            "user_name": "Susan Nice",
+            "time_checked_out": 1558902658490,
+            "order_price": 575,
+            "order_quantity": 25
+        },
+        {
+            "order_id": 3,
+            "user_id": 1,
+            "user_name": "Susan Nice",
+            "time_checked_out": 1558902658499,
+            "order_price": 132,
+            "order_quantity": 11
+        }
+    ]
+}
+
+expected_response_get_order_details = {
+ "message": "successfully fetched order",
+    "orderDetails": [
+        {
+            "user_id": 1,
+            "time_checked_out": 1558902813830,
+            "product_name": "Wifi Module",
+            "product_price": 20,
+            "product_quantity": 10,
+            "product_id": 1,
+            "total_price": 200,
+            "user_name": "Susan Nice"
+        },
+        {
+            "user_id": 8,
+            "time_checked_out": 1558902813830,
+            "product_name": "Raspberry Pi",
+            "product_price": 25,
+            "product_quantity": 15,
+            "product_id": 2,
+            "total_price": 375,
+            "user_name": "Susan Nice"
+        }
+    ]
+}
+
+expected_response_get_order_details_different_attendant = {
+    "error": "You are not authorized to view this order"
+}
+
+expected_response_get_order_details_invalid_timestamp = {
+    "error": "invalid order timestamp"
+}
+
+expected_response_get_order_details_non_existing_order = {
+    "error": "order not found"
+}

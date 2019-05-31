@@ -6,6 +6,7 @@ from api.models.user import User as UserModel
 from api.models.order import Order as OrderModel
 from fixtures.auth_fixtures import (
     login_user_valid_data as login_attendant_valid_data,
+    login_attendant_2_valid_data,
     login_admin_valid_data)
 
 
@@ -43,6 +44,11 @@ class BaseTestCase(TestCase):
                               level=2
                               )
             db.session.add(admin)
+            attendant_2 = UserModel(name='George Little', email='george.little@hoc.com',
+                                  password='$2b$12$Xl7npipxV3ejaaIGRKNp1uotTK5Gi0ka6t312mhyRYv1qgXV9UOMe',
+                                  level=1
+                                  )
+            db.session.add(attendant_2)
             order_item_1 = OrderModel(user_id=1, time_checked_out=1558902658490, product_id=1,
                                 product_quantity=10, product_price=20)
             order_item_2 = OrderModel(user_id=1, time_checked_out=1558902658490, product_id=2,
@@ -61,6 +67,10 @@ class BaseTestCase(TestCase):
             login_attendant_valid_data), content_type='application/json')
         data = json.loads(response.get_data())
         self.attendant_token = data['token']
+        response = self.test_app.test_client().post('/api/v1/auth/login', data=json.dumps(
+            login_attendant_2_valid_data), content_type='application/json')
+        data = json.loads(response.get_data())
+        self.attendant_2_token = data['token']
         self.client = self.test_app.test_client()
 
     def tearDown(self):
@@ -100,3 +110,10 @@ class CommonTestCases(BaseTestCase):
             json_data), content_type='application/json', headers={'Authorization': 'Bearer {}'.format(self.attendant_token)})
         data = json.loads(response.get_data())
         assert data == expected_response
+
+    def attendant_token_2_assert_count_equal(self, url, expected_response):
+        response = self.client.get(url, content_type='application/json',
+                                   headers={'Authorization': 'Bearer {}'.format(self.attendant_2_token)})
+        data = json.loads(response.get_data())
+        self.assertCountEqual(data, expected_response)
+

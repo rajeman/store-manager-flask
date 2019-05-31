@@ -18,7 +18,11 @@ from fixtures.order_fixtures import (
     create_order_duplicate_product_id,
     expected_response_duplicate_product_id,
     expected_response_create_order_no_json_data,
-    expected_response_get_order_list
+    expected_response_get_order_list,
+    expected_response_get_order_details,
+    expected_response_get_order_details_different_attendant,
+    expected_response_get_order_details_invalid_timestamp,
+    expected_response_get_order_details_non_existing_order
 )
 
 order_url = '/api/v1/sales'
@@ -28,14 +32,14 @@ class TestOrder(BaseTestCase):
 
     def test_create_order_attendant(self):
         """
-        Test to show that a product can be successfully created by
+        Test to show that an order can be successfully created by
         an attendant with valid product details
         """
         response = self.client.post(order_url, data=json.dumps(
             create_order_valid_order_details), content_type='application/json',
             headers={'Authorization': 'Bearer {}'.format(self.attendant_token)})
         data = json.loads(response.get_data())
-        assert data['message'] == 'Successfully created order'
+        self.assertCountEqual(expected_response_valid_order_details, data)
 
     def test_create_order_invalid_products_array(self):
         """
@@ -140,3 +144,52 @@ class TestOrder(BaseTestCase):
                 self,
                 order_url,
                 expected_response_get_order_list)
+
+    def test_get_order_details_admin(self):
+            """
+            Test to show that an admin can get the details of an order
+            """
+            CommonTestCases.admin_token_assert_count_equal(
+                self,
+                order_url + '/1558902658490',
+                expected_response_get_order_details)
+
+    def test_get_order_details_attendant(self):
+            """
+            Test to show that an attendant can get the details of an order
+            he created
+            """
+            CommonTestCases.attendant_token_assert_count_equal(
+                self,
+                order_url + '/1558902658490',
+                expected_response_get_order_details)
+
+    def test_get_order_details_different_attendant(self):
+            """
+            Test to show that an attendant cannot get the details of an order
+            he didn't make
+            """
+            CommonTestCases.attendant_token_2_assert_count_equal(
+                self,
+                order_url + '/1558902658490',
+                expected_response_get_order_details_different_attendant)
+
+    def test_get_order_details_invalid_timestamp(self):
+            """
+            Test to show that an order details cannot be gotten if the timestamp
+            params is not a valid integer
+            """
+            CommonTestCases.attendant_token_assert_count_equal(
+                self,
+                order_url + '/15589026584901223987989287879287987',
+                expected_response_get_order_details_invalid_timestamp)
+
+    def test_get_order_details_non_existent_timestamp_params(self):
+            """
+            Test to show that an order details cannot be gotten if the supplied
+            timestamp is not existent
+            """
+            CommonTestCases.attendant_token_assert_count_equal(
+                self,
+                order_url + '/15589026',
+                expected_response_non_existing_product)
