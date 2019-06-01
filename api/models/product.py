@@ -1,5 +1,6 @@
-from sqlalchemy import (Column, Integer, Text)
+from sqlalchemy import (Column, Integer, Text, Enum,)
 from api.models.base import BaseModel
+from api.helpers import StateType
 
 
 class Product(BaseModel):
@@ -9,6 +10,7 @@ class Product(BaseModel):
     minimum_inventory = Column(Integer, default=0)
     price = Column(Integer, nullable=False)
     quantity = Column(Integer, nullable=False)
+    state = Column(Enum(StateType), default="active")
 
     def json(self):
         return [{'product_id': self.id,
@@ -25,3 +27,11 @@ class Product(BaseModel):
                  'product_quantity': product.quantity,
                  'minimum_inventory': product.minimum_inventory}
                 for product in products]
+
+    @classmethod
+    def find_by_id(cls, id):
+        return cls.query.filter_by(id=id, state='active').first()
+
+    @classmethod
+    def find_all(cls):
+        return cls.query.filter_by(state='active')

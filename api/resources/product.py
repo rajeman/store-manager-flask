@@ -68,5 +68,6 @@ class Product(Resource):
         product = ProductModel.find_by_id(id=id)
         if not product:
             return {'error': 'Product not found'}, 404
-        product.delete_from_db()
+        update_entity_fields(product, state='deleted')
+        product.save_to_db()
         return {'message': 'successfully deleted product'}
