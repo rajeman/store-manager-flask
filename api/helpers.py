@@ -1,6 +1,7 @@
 from flask_restful import abort
 import functools
 import re
+import enum
 from flask_jwt_extended import get_jwt_identity
 
 Attendant = 1
@@ -104,3 +105,8 @@ def validate_order_items(order_items):
         if vetted_order_items.get(product_id):
             abort(400, error='product with id "{}" is supplied twice'.format(product_id))
         vetted_order_items[product_id] = product_id
+
+class StateType(enum.Enum):
+    active = "active"
+    archived = "archived"
+    deleted = "deleted"
