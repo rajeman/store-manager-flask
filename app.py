@@ -15,7 +15,7 @@ from api.resources.profile import Profile
 def create_app(config_name):
     flask_app = Flask(__name__)
     flask_app.config.from_object(config[config_name])
-    CORS(flask_app)
+    CORS(flask_app, resources={r"/api/*": {"origins": "*"}})
     create_api(flask_app)
     return flask_app
 
