@@ -8,6 +8,7 @@ class Config:
     load_dotenv(os.path.join(basedir, '.env'))
     SECRET_KEY = os.getenv('JWT_SECRET_KEY')
     JWT_ACCESS_TOKEN_EXPIRES = 3600 * 72
+    PROPAGATE_EXCEPTIONS = True
 
 
 class DevelopmentConfig(Config):
