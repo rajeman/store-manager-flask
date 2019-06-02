@@ -61,6 +61,8 @@ class Order(Resource):
                 abort(404, error='order not found')
             if current_user['level'] == Attendant and not (current_user['id'] == order_items[0].user_id):
                 abort(401, error='You are not authorized to view this order')
+            order_price = sum([order_item.product_price * order_item.product_quantity for order_item in order_items])
+            order_quantity = sum([order_item.product_quantity for order_item in order_items])
             order_item_result = []
             for order_item in order_items:
                 order_item_result.append({
@@ -72,7 +74,10 @@ class Order(Resource):
                     'product_id': order_item.product.id,
                     'total_price': order_item.product_price * order_item.product_quantity,
                     'user_name': order_item.user.name,
-                    'user_id': order_item.user.id
+                    'user_id': order_item.user.id,
+                    'order_id': order_items[0].id,
+                    'order_price': order_price,
+                    'order_quantity': order_quantity
                 })
 
             return {'message': 'successfully fetched order',
