@@ -10,6 +10,7 @@ class Profile(Resource):
     @user_level(Admin, Attendant)
     def get(self, id=None):
         from api.models.user import User as UserModel
+        from api.models.product import Product as ProductModel
         from api.models.order import Order as OrderModel
         from app import bcrypt
 
