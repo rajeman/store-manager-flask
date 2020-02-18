@@ -1,0 +1,22 @@
+version: '2.1'
+services:
+  database:
+    restart: always
+    image: postgres:10.1
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=store-manager-flask
+    ports:
+      - '5432:5432'
+    expose:
+      - '5432'
+    container_name: store_manager_db
+  web:
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - '8000:5000'
+    container_name: sm-flask
